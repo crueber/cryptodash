@@ -1,28 +1,114 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header />
+    <CoingeckoError v-if="error" />
+    <Dashboard v-if="!error" v-show="!edit" :data="data" :records="pageRecords" :symbols="symbols" :pages="pages" />
+    <CoinData v-show="edit" :records="records" @save="saveCoins" />
+    <Footer :refreshed_at="refreshed_at" :time_left="time_left" @refresh="initData" @edit="editCoins" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+import Dashboard from './components/Dashboard.vue'
+import CoinData from './components/CoinData.vue'
+import CoingeckoError from './components/errors/Coingecko'
+
+import { computeSymbols } from './utilities/currency'
+import { getMarketData, marketTicker } from './utilities/fetcher'
+
+import defaultCoins from './components/data/defaultCoins.json'
+
+const storage = window.localStorage
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Dashboard,
+    CoinData,
+    Header,
+    Footer,
+    CoingeckoError
+  },
+  methods: {
+    initData: async function() {
+      this.refreshed_date = new Date()
+
+      try { 
+        const dataObj = await getMarketData.apply(this, []) 
+
+        this.data = dataObj
+        this.calls += 1
+        if (this.error) this.error = false
+      } catch { this.error = true }
+    },
+    marketTick: function(refreshNow, timeLeft) {
+      this.time_left = timeLeft
+      if (refreshNow) this.initData()
+    },
+    editCoins: function() {
+      this.edit = !this.edit
+    },
+    saveCoins: function(coins) {
+      storage.setItem("coins", JSON.stringify(coins))
+      this.records = coins
+      this.edit = false
+    }
+  },
+  mounted: function() {
+    this.initData()
+    marketTicker(this.marketTick)
+  },
+  computed: {
+    refreshed_at: function() {
+      if (!this.refreshed_date) return null;
+
+      const d = this.refreshed_date;
+      return ("0" + d.getUTCDate()).slice(-2) + "/" + ("0" + (d.getUTCMonth()+1)).slice(-2) + "/" + d.getUTCFullYear() + " " + d.toLocaleTimeString()
+    },
+    pages: function() {
+      const pages = new Set()
+      Object.keys(this.pageRecords).forEach(i => pages.add(i))
+      return [...pages]
+    },
+    pageRecords: function() {
+      const pageRecords = {}
+      this.records.forEach((r) => {
+        const page = Array.isArray(r.page) ? r.page : (r.page ? [r.page] : ['Default'])
+        page.forEach(i => {
+          if (pageRecords[i]) pageRecords[i].push(r)
+          else pageRecords[i] = [r]
+        })
+      })
+      return pageRecords
+    },
+    symbols: function() { return computeSymbols(this.records) }
+  },
+  data: function () {
+    if (storage.getItem("coins") === null) storage.setItem("coins", JSON.stringify(defaultCoins))
+    const records = JSON.parse(storage.getItem("coins"))
+
+    return {
+      calls: 0,
+      data: null,
+      edit: false,
+      error: false,
+      refreshed_date: null,
+      time_left: null,
+      records
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #ccc;
+  margin: 0;
 }
+#app >>> a { color: #88e }
 </style>
