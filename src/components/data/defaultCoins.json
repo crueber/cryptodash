@@ -1,35 +1,38 @@
 [
-    {
-      "name": "Joe Blow",
-      "page": [ "Just Joe", "Everyone" ],
-      "coins": [
-        [ "usdt", 9864560, "Hot Wallet" ],
-        [ "bnb", 12340, "Hot Wallet" ],
-        [ "dot", 91534, "Hot Wallet" ],
-        [ "xrp", 1, "Hot Wallet" ]
-      ]
-    },
-    {
-      "name": "Tom Jones",
-      "page": "Everyone",
-      "coins": [
-        [ "usdc", 9864560, "Hot Wallet" ],
-        [ "xrp", 99999999, "Cold Wallet" ],
-        [ "xrp", 1, "Hot Wallet" ]
-      ]
-    },
-    {
-      "name": "Bob Dewey",
-      "page": "Everyone",
-      "coins": [
-        [ "uni", 10, "Cold Wallet" ],
-        [ "uni", 1000, "Hot Wallet" ],
-        [ "ltc", 42, "Hot Wallet" ],
-        [ "link", 123, "Hot Wallet" ],
-        [ "bch", 0.00005, "Hot Wallet" ],
-        [ "bch", 0.005, "Cold Wallet" ],
-        [ "doge", 1000000, "Hot Wallet" ],
-        [ "xrp", 1, "Hot Wallet" ]
-      ]
-    }
-  ]
+  {
+    "name": "Joe Blow",
+    "page": [
+      "Just Joe",
+      "Everyone"
+    ],
+    "coins": [
+      "usdt,9864560,Hot Wallet",
+      "bnb,12340,Hot Wallet",
+      "dot,91534,Hot Wallet",
+      "xrp,1,Hot Wallet"
+    ]
+  },
+  {
+    "name": "Tom Jones",
+    "page": "Everyone",
+    "coins": [
+      "usdc,9864560,Hot Wallet",
+      "xrp,99999999,Cold Wallet",
+      "xrp,1,Hot Wallet"
+    ]
+  },
+  {
+    "name": "Bob Dewey",
+    "page": "Everyone",
+    "coins": [
+      "uni,10,Cold Wallet",
+      "uni,1000,Hot Wallet",
+      "ltc,42,Hot Wallet",
+      "link,123,Hot Wallet",
+      "bch,0.00005,Hot Wallet",
+      "bch,0.005,Cold Wallet",
+      "doge,1000000,Hot Wallet",
+      "xrp,1,Hot Wallet"
+    ]
+  }
+]
