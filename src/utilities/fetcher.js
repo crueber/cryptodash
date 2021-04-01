@@ -1,6 +1,6 @@
 
 export async function getMarketData() {
-    const data = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&price_change_percentage=24h,30d&per_page=20&page=1&sparkline=false")
+    const data = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&price_change_percentage=24h,30d,1y&per_page=20&page=1&sparkline=false")
     const dataObj = {}
 
     if (!data.ok) throw new Error()

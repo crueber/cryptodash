@@ -8,6 +8,7 @@
             <th class="small">ATH</th>
             <th class="small">24h</th>
             <th class="small">30d</th>
+            <th class="small">1y</th>
         </thead>
         <tbody>
             <tr v-for="datum, index in data" :key="index">
@@ -21,8 +22,11 @@
                 <td><FiatValue :value="datum.current_price" /></td>
                 <td>{{ toCurrency(parseInt(datum.market_cap)).replace(/,\d{3},\d{3}\.\d{2}$/,'M').replace('.00','') }}</td>
                 <td class="small"><FiatValue :value="datum.ath" /></td>
-                <td class="small" :style="{ color: datum.price_change_percentage_24h > 0 ? '#dfd' : '#ebb' }">{{ datum.price_change_percentage_24h > 0 ? "+" : "" }}{{ datum.price_change_percentage_24h.toFixed(1) }}%</td>
-                <td class="small" :style="{ color: datum.price_change_percentage_30d_in_currency > 0 ? '#dfd' : '#ebb' }">{{ datum.price_change_percentage_30d_in_currency > 0 ? "+" : "" }}{{ datum.price_change_percentage_30d_in_currency.toFixed(1) }}%</td>
+                <td class="small" v-for="percentage,index in percentages" :key="index">
+                    <span v-if="datum[percentage]" :style="{ color: datum[percentage] && datum[percentage] > 0 ? '#dfd' : '#ebb' }">
+                        {{ datum[percentage] > 0 ? "+" : "" }}{{ datum[percentage].toFixed(1) }}%
+                    </span>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -47,6 +51,15 @@ export default {
     computed: {
         data: function() {
             return Object.values(this.marketData).filter(t => this.symbols.includes(t.symbol)).sort(function(a,b) { return a.market_cap_rank - b.market_cap_rank })
+        }
+    },
+    data: function() {
+        return {
+            percentages: [
+                'price_change_percentage_24h_in_currency',
+                'price_change_percentage_30d_in_currency',
+                'price_change_percentage_1y_in_currency'
+            ]
         }
     }
 }
