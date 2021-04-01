@@ -17,7 +17,7 @@ import CoingeckoError from './components/errors/Coingecko'
 
 import { getMarketData, marketTicker } from './utilities/fetcher'
 
-import defaultCoins from './components/data/defaultCoins.json'
+import defaultCoins from './data/defaultCoins.json'
 
 const storage = window.localStorage
 
