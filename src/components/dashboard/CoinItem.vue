@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import FiatValue from './FiatValue'
-import { toCrypto } from '../utilities/currency'
+import FiatValue from '../shared/FiatValue'
+import { toCrypto } from '../../utilities/currency'
 
 export default {
   name: 'CoinItem',

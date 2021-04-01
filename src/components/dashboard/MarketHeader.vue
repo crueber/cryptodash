@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import FiatValue from './FiatValue'
-import { toCurrency, toCrypto } from '../utilities/currency'
+import FiatValue from '../shared/FiatValue'
+import { toCurrency, toCrypto } from '../../utilities/currency'
 
 export default {
     props: {

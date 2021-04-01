@@ -11,7 +11,7 @@
 <script>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import Dashboard from './components/Dashboard.vue'
+import Dashboard from './components/dashboard/Dashboard.vue'
 import CoinData from './components/CoinData.vue'
 import CoingeckoError from './components/errors/Coingecko'
 

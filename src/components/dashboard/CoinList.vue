@@ -20,7 +20,7 @@
 
 <script>
 import CoinItem from "./CoinItem"
-import FiatValue from "./FiatValue"
+import FiatValue from "../shared/FiatValue"
 
 export default {
   name: 'CoinList',

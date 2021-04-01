@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { toCurrency } from "../utilities/currency"
+import { toCurrency } from "../../utilities/currency"
 
 export default {
     props: {
