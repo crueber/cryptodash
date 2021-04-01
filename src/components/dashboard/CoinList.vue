@@ -34,9 +34,10 @@ export default {
   },
   computed: {
     entries: function() {
-      return this.coins.map((i) => {
+      return this.coins.map((a) => {
+        const i = a.split(',')
         return {
-          amount: i[1],
+          amount: parseFloat(i[1]),
           location: i[2],
           symbol: i[0],
           symbol_price: this.data[i[0]]?.current_price,

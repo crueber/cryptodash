@@ -2,7 +2,7 @@
   <div id="app">
     <Header />
     <CoingeckoError v-if="error" />
-    <Dashboard v-if="!error" v-show="!edit" :data="data" :records="pageRecords" :symbols="symbols" :pages="pages" />
+    <Dashboard v-if="!error" v-show="!edit" :data="data" :records="pageRecords" :pages="pages" />
     <CoinData v-show="edit" :records="records" @save="saveCoins" />
     <Footer :refreshed_at="refreshed_at" :time_left="time_left" @refresh="initData" @edit="editCoins" />
   </div>
@@ -15,7 +15,6 @@ import Dashboard from './components/dashboard/Dashboard.vue'
 import CoinData from './components/CoinData.vue'
 import CoingeckoError from './components/errors/Coingecko'
 
-import { computeSymbols } from './utilities/currency'
 import { getMarketData, marketTicker } from './utilities/fetcher'
 
 import defaultCoins from './components/data/defaultCoins.json'
@@ -82,8 +81,7 @@ export default {
         })
       })
       return pageRecords
-    },
-    symbols: function() { return computeSymbols(this.records) }
+    }
   },
   data: function () {
     if (storage.getItem("coins") === null) storage.setItem("coins", JSON.stringify(defaultCoins))

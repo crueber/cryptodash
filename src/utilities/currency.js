@@ -7,7 +7,7 @@ export function toCrypto(num, digits) {
 
 export function computeSymbols(records) {
     const symbols = new Set()
-    records.forEach(r => r.coins.forEach(c => symbols.add(c[0])))
+    records.forEach(r => r.coins.forEach(c => symbols.add(c.split(',')[0])))
 
     return [...symbols]
 }

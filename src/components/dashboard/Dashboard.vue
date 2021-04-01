@@ -28,6 +28,8 @@
 import CoinList from './CoinList.vue'
 import MarketHeader from './MarketHeader.vue'
 
+import { computeSymbols } from '../../utilities/currency'
+
 export default {
   name: "Dashboard",
   components: {
@@ -35,7 +37,6 @@ export default {
     MarketHeader
   },
   props: {
-    symbols: Array,
     records: Object,
     pages: Array,
     data: Object
@@ -51,17 +52,15 @@ export default {
     }
   },
   computed: {
+    currentRecords: function() {
+      return this.selectedPage === null ? [] : this.records[this.selectedPage]
+    },
     currentSymbols: function() {
       if (this.selectedPage === null) {
         return Object.keys(this.data)
       }
 
-      const symbols = new Set()
-      this.currentRecords.forEach((r) => { r.coins.forEach(c => symbols.add(c[0])) })
-      return [...symbols]
-    },
-    currentRecords: function() {
-      return this.selectedPage === null ? [] : this.records[this.selectedPage]
+      return computeSymbols(this.currentRecords)
     }
   },
   data: function() {
