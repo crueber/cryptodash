@@ -6,7 +6,10 @@
       </div>
       <div class="right">
         <div v-if="refreshed_at">Data last refreshed at: {{ refreshed_at }}</div>
-        <div class="refresh">Next Refresh in {{ time_left }}s</div>
+        <div class="refresh">
+          <span v-if="time_left > 0">Refreshing in {{ time_left }}s</span>
+          <span v-else>Refresh is imminent</span>
+        </div>
       </div>
     </div>
 </template>
