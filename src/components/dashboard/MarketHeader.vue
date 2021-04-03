@@ -1,6 +1,12 @@
 <template>
     <div>
-        <div class="date">{{updated_at}}</div>
+        <div class="date">
+            {{updated_at}}
+            (
+                <span v-if="trend"><a href="#" @click.prevent="toggleTrend">trend</a></span>
+                <span v-else><a href="#" @click.prevent="toggleTrend">percentile</a></span>
+            )
+        </div>
         <table>
             <thead>
                 <th>&nbsp;</th>
@@ -26,8 +32,18 @@
                     <td class="small">{{ toCurrency(parseInt(datum.market_cap)).replace(/,\d{3},\d{3}\.\d{2}$/,'M').replace('.00','') }}</td>
                     <td class="small"><FiatValue :value="datum.ath" /></td>
                     <td class="small" v-for="percentage,index in percentages" :key="index">
-                        <span v-if="datum[percentage]" :style="{ color: datum[percentage] && datum[percentage] > 0 ? '#dfd' : '#ebb' }">
+                        <span v-if="datum[percentage] && !trend" :style="{ color: datum[percentage] && datum[percentage] > 0 ? '#dfd' : '#ebb' }">
                             {{ datum[percentage] > 0 ? "+" : "" }}{{ datum[percentage].toFixed(1) }}%
+                        </span>
+                        <span v-if="datum[percentage] && datum[percentage] !== 0 && trend">
+                            <svg width="10" height="14" viewBox="0 0 10 14" stroke-width="1" :stroke="datum[percentage] > 0 ? '#88a' : '#b66'">
+                                <path fill="none"  :d="'M1 7L9 ' + (7 + trendLine(datum[percentage],percentage))"/>
+                            </svg>
+                            <!-- {{datum[percentage]}} -->
+                            <!-- <trend :data="[0, Math.ceil(datum[percentage])]"
+                                   :gradient="['#b22', '#8d8']"
+                                   min="-100" max="100"
+                                   height="14" width="10" padding="1" stroke-width="2" /> -->
                         </span>
                     </td>
                     <td>
@@ -66,7 +82,19 @@ export default {
     updated: update_at_fn,
     methods: {
         toCurrency,
-        toCrypto
+        toCrypto,
+        toggleTrend: function() { this.trend = !this.trend },
+        trendLine: function(percent, type) {
+            let amount = Math.abs(percent)
+
+            if (type.includes('24h')) amount = Math.log(amount * (percent > 0 ? 10 : 2))
+            else {
+                const factor = type.includes('30d') ? 5 : 10
+                amount = Math.log(amount * factor)
+            }
+
+            return percent > 0 ? -(amount+1) : (amount+1)
+        }
     },
     computed: {
         data: function() {
@@ -75,6 +103,7 @@ export default {
     },
     data: function() {
         return {
+            trend: true,
             updated_at: null,
             percentages: [
                 'price_change_percentage_24h_in_currency',
