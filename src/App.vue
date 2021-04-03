@@ -103,4 +103,7 @@ export default {
   margin: 0;
 }
 #app >>> a { color: #88e }
+@media only screen and (max-width: 608px) {
+  #app { width: 608px; }
+}
 </style>

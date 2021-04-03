@@ -75,7 +75,7 @@ export default {
 .market { text-align: center; margin: 0 auto; }
 div.coinage { background: #333; margin-top: 0.5rem; }
 .coinEntry:first-child { width: 600px; }
-.coinEntry { vertical-align: top; width: 600px; margin: 0.5rem 0.25rem; display: inline-block; background: #494949; min-height: 15rem; }
+.coinEntry { vertical-align: top; width: 600px; margin: 0.5rem 4px; display: inline-block; background: #494949; min-height: 15rem; }
 h3 { padding: .5rem .75rem .25rem; margin: 0; font-size: 12px; text-align: center; background: #444; }
 .paging { font-size: 75%}
 .paging > span { width: 600px; }
