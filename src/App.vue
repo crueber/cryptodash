@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <Header />
+    <Header :time_left="time_left" />
     <CoingeckoError v-if="error" />
     <Dashboard v-if="!error" v-show="!edit" :data="data" :records="pageRecords" :pages="pages" />
     <CoinData v-show="edit" :records="records" @save="saveCoins" />
-    <Footer :refreshed_at="refreshed_at" :time_left="time_left" @refresh="initData" @edit="editCoins" />
+    <Footer @refresh="initData" @edit="editCoins" />
   </div>
 </template>
 
@@ -60,12 +60,6 @@ export default {
     marketTicker(this.marketTick)
   },
   computed: {
-    refreshed_at: function() {
-      if (!this.refreshed_date) return null;
-
-      const d = this.refreshed_date;
-      return ("0" + d.getUTCDate()).slice(-2) + "/" + ("0" + (d.getUTCMonth()+1)).slice(-2) + "/" + d.getUTCFullYear() + " " + d.toLocaleTimeString()
-    },
     pages: function() {
       const pages = new Set()
       Object.keys(this.pageRecords).forEach(i => pages.add(i))

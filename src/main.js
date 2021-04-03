@@ -3,6 +3,10 @@ import Trend from 'vuetrend'
 
 Vue.use(Trend)
 
+Vue.config.keyCodes = {
+  e: 69
+}
+
 import App from './App.vue'
 
 Vue.config.productionTip = false
