@@ -3,7 +3,7 @@
     <Header :time_left="time_left" />
     <CoingeckoError v-if="error" />
     <Dashboard v-if="!error" v-show="!edit" :data="data" :records="pageRecords" :pages="pages" />
-    <CoinData v-show="edit" :records="records" @save="saveCoins" />
+    <CoinData v-if="edit" :records="records" @save="saveCoins" />
     <Footer @refresh="initData" @edit="editCoins" />
   </div>
 </template>

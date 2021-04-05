@@ -1,7 +1,7 @@
 <template>
     <div class="edit">
         <h4>Current Personal Data</h4>
-        <textarea name="data" id="coindata" v-model="data" @keyup.ctrl.enter="save"></textarea><br />
+        <textarea ref="textarea" name="data" id="coindata" v-model="data" @keyup.ctrl.enter="save"></textarea><br />
         <div v-show="error">Unable to save. Make sure you are entering valid JSON.</div>
         <button @click="save">Save</button>
     </div>
@@ -11,6 +11,9 @@
 export default {
     props: {
         records: Array
+    },
+    mounted: function() {
+        this.$refs.textarea.focus()
     },
     data: function() {
         return {
