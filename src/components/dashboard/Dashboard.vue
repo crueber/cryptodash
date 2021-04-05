@@ -47,9 +47,19 @@ export default {
       this.selectedPage = page
     },
     marketOnly: function(event) {
-      event.preventDefault()
+      event?.preventDefault()
       this.selectedPage = null
     }
+  },
+  mounted: function() {
+    window.EventBus.$on('toggleMarket', () => { 
+      if (this.selectedPage === null) {
+        this.selectedPage = this.lastPage
+      } else {
+        this.lastPage = this.selectedPage
+        this.selectedPage = null
+      }
+     })
   },
   computed: {
     currentRecords: function() {
@@ -65,7 +75,8 @@ export default {
   },
   data: function() {
     return {
-      selectedPage: this.pages[0]
+      selectedPage: this.pages[0],
+      lastPage: null
     }
   }
 }

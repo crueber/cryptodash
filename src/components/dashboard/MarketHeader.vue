@@ -111,6 +111,9 @@ export default {
                 'price_change_percentage_1y_in_currency'
             ]
         }
+    },
+    mounted: function() {
+        window.EventBus.$on('toggleTrend', () => { this.toggleTrend() })
     }
 }
 </script>

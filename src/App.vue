@@ -58,6 +58,18 @@ export default {
   mounted: function() {
     this.initData()
     marketTicker(this.marketTick)
+
+    document.addEventListener('keyup', (e) => {
+        if (this.edit) {
+          if (e.keyCode === 27) return this.editCoins()
+        }
+        const keyFromCode = String.fromCharCode(e.keyCode);
+        switch (keyFromCode.toLowerCase()) {
+          case 'e': this.editCoins(); break;
+          case 't': window.EventBus.$emit('toggleTrend'); break;
+          case 'm': window.EventBus.$emit('toggleMarket'); break;
+        }
+    })
   },
   computed: {
     pages: function() {
